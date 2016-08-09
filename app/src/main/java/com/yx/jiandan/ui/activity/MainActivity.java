@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
@@ -46,19 +47,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
 
     private void bindViews() {
+
         rl_1 = (RelativeLayout) findViewById(R.id.rl_1);
         rl_2 = (RelativeLayout) findViewById(R.id.rl_2);
         rl_3 = (RelativeLayout) findViewById(R.id.rl_3);
         rl_4 = (RelativeLayout) findViewById(R.id.rl_4);
         rl_5 = (RelativeLayout) findViewById(R.id.rl_5);
-        rl_6 = (RelativeLayout) findViewById(R.id.rl_6);
+//        rl_6 = (RelativeLayout) findViewById(R.id.rl_6);
 
         rl_1.setOnClickListener(this);
         rl_2.setOnClickListener(this);
         rl_3.setOnClickListener(this);
         rl_4.setOnClickListener(this);
         rl_5.setOnClickListener(this);
-        rl_6.setOnClickListener(this);
+//        rl_6.setOnClickListener(this);
     }
 
     /**
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rl_3.setSelected(false);
         rl_4.setSelected(false);
         rl_5.setSelected(false);
-        rl_6.setSelected(false);
+//        rl_6.setSelected(false);
     }
 
     private void hideAllFragment(FragmentTransaction fragmentTransaction) {
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.rl_2:
                 setSelected();
-                rl_3.setSelected(true);
+                rl_2.setSelected(true);
                 if (pictureFragment == null) {
                     pictureFragment = new PictureFragment();
                     fTransaction.add(R.id.fragment_container, pictureFragment);
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.rl_3:
                 setSelected();
-                rl_4.setSelected(true);
+                rl_3.setSelected(true);
                 if (sisterFragment == null) {
                     sisterFragment = new SisterFragment();
                     fTransaction.add(R.id.fragment_container, sisterFragment);
@@ -122,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.rl_4:
                 setSelected();
-                rl_2.setSelected(true);
+                rl_4.setSelected(true);
                 if (jokeFragment == null) {
                     jokeFragment = new JokeFragment();
                     fTransaction.add(R.id.fragment_container, jokeFragment);
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.rl_5:
                 setSelected();
-                rl_6.setSelected(true);
+                rl_5.setSelected(true);
                 if (videoFragment == null) {
                     videoFragment = new VideoFragment();
                     fTransaction.add(R.id.fragment_container, videoFragment);
@@ -140,16 +142,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fTransaction.show(videoFragment);
                 }
                 break;
-            case R.id.rl_6:
-                setSelected();
-                rl_5.setSelected(true);
-                if (settingFragment == null) {
-                    settingFragment = new SettingFragment();
-                    fTransaction.add(R.id.fragment_container, settingFragment);
-                } else {
-                    fTransaction.show(settingFragment);
-                }
-                break;
+//            case R.id.rl_6:
+//                setSelected();
+//                rl_5.setSelected(true);
+//                if (settingFragment == null) {
+//                    settingFragment = new SettingFragment();
+//                    fTransaction.add(R.id.fragment_container, settingFragment);
+//                } else {
+//                    fTransaction.show(settingFragment);
+//                }
+//                break;
         }
         fTransaction.commit();
     }

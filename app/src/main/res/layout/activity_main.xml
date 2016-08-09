@@ -6,13 +6,34 @@
     android:orientation="vertical"
     tools:context=".ui.activity.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1" >
-    </FrameLayout>
+    <include layout="@layout/common_toolbar"></include>
 
-    <include layout="@layout/layout_bottom" />
+    <android.support.v4.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                layout="@layout/layout_bottom"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom" />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/drawer_container"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/primary" />
+
+    </android.support.v4.widget.DrawerLayout>
+
 
 </LinearLayout>
