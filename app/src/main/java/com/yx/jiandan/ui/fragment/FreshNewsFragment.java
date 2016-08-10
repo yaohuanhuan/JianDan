@@ -15,6 +15,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yx.jiandan.R;
+import com.yx.jiandan.bean.FreshNews;
+import com.yx.jiandan.bean.Posts;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,17 +38,17 @@ public class FreshNewsFragment extends Fragment {
     public static final String URL_FRESH_NEWS = "http://jandan.net/?oxwlxojflwblxbsapi=get_recent_posts&include=url," +
             "date,tags,author,title,comment_count,custom_fields&custom_fields=thumb_c,views&dev=1&page=1";
 
+    private String TAG = "FresNews";
+
     private RecyclerView recyclerView;
-    private List<String> list;
+    private List<Posts> list;
+    private FreshNewsAdapter freshNewsAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         list = new ArrayList<>();
-        list.add("11111");
-        list.add("2222");
-        list.add("3333");
-        list.add("44444");
+
 
     }
 
@@ -52,9 +58,45 @@ public class FreshNewsFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new FreshNewsAdapter());
-
+        freshNewsAdapter = new FreshNewsAdapter();
+        recyclerView.setAdapter(freshNewsAdapter);
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(URL_FRESH_NEWS).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String s = response.body().string();
+                try {
+                    JSONObject object = new JSONObject(s);
+                    FreshNews freshNews = new FreshNews(object);
+                    JSONArray array = freshNews.getPosts();
+                    for (int i=0;i<array.length();i++){
+                        Posts post = new Posts(array.getJSONObject(i));
+                        list.add(post);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        freshNewsAdapter.notifyDataSetChanged();
+                    }
+                });
+
+            }
+        });
     }
 
     public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsViewHolder> {
@@ -68,7 +110,7 @@ public class FreshNewsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(FreshNewsViewHolder holder, int position) {
-            holder.tv.setText(list.get(position));
+            holder.tv.setText(list.get(position).getTitle());
         }
 
         @Override
