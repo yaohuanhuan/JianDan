@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.yx.jiandan.R;
 import com.yx.jiandan.bean.FreshNews;
 import com.yx.jiandan.bean.Posts;
+import com.yx.jiandan.ui.imageload.ImageLoadProxy;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +55,7 @@ public class FreshNewsFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Posts> list;
     private FreshNewsAdapter freshNewsAdapter;
+    private DisplayImageOptions options;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,13 +133,8 @@ public class FreshNewsFragment extends Fragment {
             holder.tv_title.setText(list.get(position).getTitle());
             holder.tv_name.setText(list.get(position).getId()+"");
             holder.tv_date.setText(list.get(position).getDate());
-            DisplayImageOptions d = new DisplayImageOptions.Builder()
-                    .cacheInMemory(true)
-                    .cacheOnDisk(true)
-                    .bitmapConfig(Bitmap.Config.RGB_565)
-                    .resetViewBeforeLoading(true)
-                    .build();
-            ImageLoader.getInstance().displayImage(list.get(position).getThumb_c(),holder.iv_pic,d);
+            options = ImageLoadProxy.getOptions4PictureList(R.mipmap.ic_loading_small);
+            ImageLoadProxy.displayImage(list.get(position).getThumb_c(), holder.iv_pic, options);
         }
 
         @Override
