@@ -1,6 +1,9 @@
 package com.yx.jiandan.ui.fragment;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,8 +15,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.yx.jiandan.R;
 import com.yx.jiandan.bean.FreshNews;
 import com.yx.jiandan.bean.Posts;
@@ -23,6 +32,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +59,13 @@ public class FreshNewsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         list = new ArrayList<>();
+        ImageLoaderConfiguration.Builder build = new ImageLoaderConfiguration.Builder(getContext());
+        build.tasksProcessingOrder(QueueProcessingType.LIFO);
+        build.diskCacheSize( 1024 * 1024 * 50);
+        build.memoryCacheSize(1024 * 1024 * 10);
+        build.memoryCache(new LruMemoryCache(1024 * 1024 * 10));
 
+        ImageLoader.getInstance().init(build.build());
 
     }
 
@@ -78,6 +95,7 @@ public class FreshNewsFragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
                 try {
+//                    Log.e(TAG,s);
                     JSONObject object = new JSONObject(s);
                     FreshNews freshNews = new FreshNews(object);
                     JSONArray array = freshNews.getPosts();
@@ -110,7 +128,16 @@ public class FreshNewsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(FreshNewsViewHolder holder, int position) {
-            holder.tv.setText(list.get(position).getTitle());
+            holder.tv_title.setText(list.get(position).getTitle());
+            holder.tv_name.setText(list.get(position).getId()+"");
+            holder.tv_date.setText(list.get(position).getDate());
+            DisplayImageOptions d = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .bitmapConfig(Bitmap.Config.RGB_565)
+                    .resetViewBeforeLoading(true)
+                    .build();
+            ImageLoader.getInstance().displayImage(list.get(position).getThumb_c(),holder.iv_pic,d);
         }
 
         @Override
@@ -121,11 +148,18 @@ public class FreshNewsFragment extends Fragment {
 
     public static class FreshNewsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv;
+        TextView tv_title;
+        TextView tv_name;
+        TextView tv_date;
+        ImageView iv_pic;
+
 
         public FreshNewsViewHolder(View itemView) {
             super(itemView);
-            tv = (TextView) itemView.findViewById(R.id.tv_title);
+            tv_title = (TextView) itemView.findViewById(R.id.tv_title);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            tv_date = (TextView) itemView.findViewById(R.id.tv_date);
+            iv_pic = (ImageView) itemView.findViewById(R.id.iv_pic);
         }
     }
 }
