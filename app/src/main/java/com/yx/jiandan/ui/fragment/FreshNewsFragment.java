@@ -26,15 +26,16 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.yx.jiandan.R;
 import com.yx.jiandan.bean.FreshNews;
 import com.yx.jiandan.bean.Posts;
+import com.yx.jiandan.callback.LoadFinishCallBack;
+import com.yx.jiandan.callback.LoadMoreListener;
 import com.yx.jiandan.ui.imageload.ImageLoadProxy;
+import com.yx.jiandan.view.AutoLoadRecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,10 +53,11 @@ public class FreshNewsFragment extends Fragment {
 
     private String TAG = "FresNews";
 
-    private RecyclerView recyclerView;
+    private AutoLoadRecyclerView recyclerView;
     private List<Posts> list;
     private FreshNewsAdapter freshNewsAdapter;
     private DisplayImageOptions options;
+    private LoadFinishCallBack mLoadFinisCallBack;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,8 +77,16 @@ public class FreshNewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fresh_news, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView = (AutoLoadRecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setOnPauseListenerParams(false,true);
+        mLoadFinisCallBack = recyclerView;
+        recyclerView.setLoadMoreListener(new LoadMoreListener() {
+            @Override
+            public void loadMore() {
+                Log.e(TAG,"loadMore");
+            }
+        });
         freshNewsAdapter = new FreshNewsAdapter();
         recyclerView.setAdapter(freshNewsAdapter);
         return view;
@@ -90,14 +100,13 @@ public class FreshNewsFragment extends Fragment {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                mLoadFinisCallBack.loadFinish(null);
                 String s = response.body().string();
                 try {
-//                    Log.e(TAG,s);
                     JSONObject object = new JSONObject(s);
                     FreshNews freshNews = new FreshNews(object);
                     JSONArray array = freshNews.getPosts();

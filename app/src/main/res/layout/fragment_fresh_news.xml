@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     tools:context="com.yx.jiandan.ui.fragment.FreshNewsFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <com.yx.jiandan.view.AutoLoadRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </android.support.v7.widget.RecyclerView>
+    </com.yx.jiandan.view.AutoLoadRecyclerView>
 
 
 </FrameLayout>
