@@ -1,14 +1,11 @@
 package com.yx.jiandan.ui.fragment;
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -54,6 +51,7 @@ public class FreshNewsFragment extends Fragment {
     private String TAG = "FresNews";
 
     private AutoLoadRecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private List<Posts> list;
     private FreshNewsAdapter freshNewsAdapter;
     private DisplayImageOptions options;
@@ -63,14 +61,6 @@ public class FreshNewsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         list = new ArrayList<>();
-        ImageLoaderConfiguration.Builder build = new ImageLoaderConfiguration.Builder(getContext());
-        build.tasksProcessingOrder(QueueProcessingType.LIFO);
-        build.diskCacheSize( 1024 * 1024 * 50);
-        build.memoryCacheSize(1024 * 1024 * 10);
-        build.memoryCache(new LruMemoryCache(1024 * 1024 * 10));
-
-        ImageLoader.getInstance().init(build.build());
-
     }
 
     @Override
@@ -78,13 +68,25 @@ public class FreshNewsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fresh_news, container, false);
 
         recyclerView = (AutoLoadRecyclerView) view.findViewById(R.id.recycler_view);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setOnPauseListenerParams(false,true);
+        recyclerView.setOnPauseListenerParams(false, true);
         mLoadFinisCallBack = recyclerView;
+
         recyclerView.setLoadMoreListener(new LoadMoreListener() {
             @Override
             public void loadMore() {
-                Log.e(TAG,"loadMore");
+                Log.e(TAG, "loadMore");
             }
         });
         freshNewsAdapter = new FreshNewsAdapter();
@@ -111,7 +113,7 @@ public class FreshNewsFragment extends Fragment {
                     JSONObject object = new JSONObject(s);
                     FreshNews freshNews = new FreshNews(object);
                     JSONArray array = freshNews.getPosts();
-                    for (int i=0;i<array.length();i++){
+                    for (int i = 0; i < array.length(); i++) {
                         Posts post = new Posts(array.getJSONObject(i));
                         list.add(post);
                     }
@@ -141,7 +143,7 @@ public class FreshNewsFragment extends Fragment {
         @Override
         public void onBindViewHolder(FreshNewsViewHolder holder, int position) {
             holder.tv_title.setText(list.get(position).getTitle());
-            holder.tv_name.setText(list.get(position).getId()+"");
+            holder.tv_name.setText(list.get(position).getId() + "");
             holder.tv_date.setText(list.get(position).getDate());
             options = ImageLoadProxy.getOptions4PictureList(R.mipmap.ic_loading_small);
             ImageLoadProxy.displayImage(list.get(position).getThumb_c(), holder.iv_pic, options);
