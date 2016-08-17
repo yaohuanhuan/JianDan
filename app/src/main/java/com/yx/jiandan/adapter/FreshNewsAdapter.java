@@ -78,9 +78,10 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                int code = response.code();
                 String s = response.body().string();
                 try {
-                    Log.e("test", "数据刷新啦！");
+                    Log.e("test", "结果码 == "+code);
                     JSONObject object = new JSONObject(s);
                     FreshNews freshNews = new FreshNews(object);
                     JSONArray array = freshNews.getPosts();
