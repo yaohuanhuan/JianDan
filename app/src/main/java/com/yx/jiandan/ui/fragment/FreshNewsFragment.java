@@ -56,13 +56,13 @@ public class FreshNewsFragment extends Fragment {
                 android.R.color.holo_red_light);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setOnPauseListenerParams(false, true);
-        freshNewsAdapter = new FreshNewsAdapter(getActivity());
+        freshNewsAdapter = new FreshNewsAdapter(getActivity(),recyclerView);
         recyclerView.setAdapter(freshNewsAdapter);
-        freshNewsAdapter.loadDate();
+        freshNewsAdapter.loadFirst();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                freshNewsAdapter.loadDate();
+                freshNewsAdapter.loadFirst();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -72,7 +72,8 @@ public class FreshNewsFragment extends Fragment {
         recyclerView.setLoadMoreListener(new LoadMoreListener() {
             @Override
             public void loadMore() {
-                Log.e(TAG, "loadMore");
+                Log.e(TAG,"加载跟多！");
+                freshNewsAdapter.loadNextPage();
             }
         });
     }

@@ -107,11 +107,11 @@ public class AutoLoadRecyclerView extends RecyclerView implements LoadFinishCall
             //由于GridLayoutManager是LinearLayoutManager子类，所以也适用
             if (getLayoutManager() instanceof LinearLayoutManager) {
                 int lastVisibleItem = ((LinearLayoutManager) getLayoutManager()).findLastVisibleItemPosition();
-                int totalItemCount = AutoLoadRecyclerView.this.getAdapter().getItemCount();
 
+                int totalItemCount = AutoLoadRecyclerView.this.getAdapter().getItemCount();
                 //有回调接口，并且不是加载状态，并且剩下2个item，并且向下滑动，则自动加载
-                if (loadMoreListener != null && !isLoadingMore && lastVisibleItem >= totalItemCount -
-                        2 && dy > 0) {
+                if (loadMoreListener != null && !isLoadingMore && lastVisibleItem +4 >= totalItemCount  && dy > 0) {
+                    Log.e("ttt","isLoadingMore === "+isLoadingMore);
                     loadMoreListener.loadMore();
                     isLoadingMore = true;
                 }

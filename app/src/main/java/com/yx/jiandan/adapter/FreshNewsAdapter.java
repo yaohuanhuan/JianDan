@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.yx.jiandan.R;
 import com.yx.jiandan.bean.FreshNews;
+import com.yx.jiandan.callback.LoadFinishCallBack;
 import com.yx.jiandan.okhttp.OkHttpCallback;
 import com.yx.jiandan.okhttp.OkHttpProxy;
 import com.yx.jiandan.okhttp.parser.FreshNewsParser;
@@ -28,12 +29,15 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
 
     private ArrayList<FreshNews> mFreshNews;
     private DisplayImageOptions options;
+    private LoadFinishCallBack mLoadFinisCallBack;
+    private int page;
 
     Activity activity;
 
-    public FreshNewsAdapter(Activity activity) {
+    public FreshNewsAdapter(Activity activity,LoadFinishCallBack loadFinisCallBack) {
         this.activity = activity;
         mFreshNews = new ArrayList<>();
+        this.mLoadFinisCallBack = loadFinisCallBack;
     }
 
     @Override
@@ -56,19 +60,30 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
     public int getItemCount() {
         return mFreshNews.size();
     }
+    public void loadFirst() {
+        Log.e("test","loadFirst");
+        page = 1;
+        loadDate();
+    }
 
+    public void loadNextPage() {
+        page++;
+        loadDate();
+    }
     public void loadDate() {
-        OkHttpProxy.get(FreshNews.getUrlFreshNews(1), new OkHttpCallback<ArrayList<FreshNews>>(new FreshNewsParser()) {
+        Log.e("test","page == "+page);
+        OkHttpProxy.get(FreshNews.getUrlFreshNews(page), new OkHttpCallback<ArrayList<FreshNews>>(new FreshNewsParser()) {
 
             @Override
             public void onSuccess(int code, ArrayList<FreshNews> freshNewses) {
+                mLoadFinisCallBack.loadFinish(null);
                 mFreshNews.addAll(freshNewses);
                 notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(int code, String msg) {
-
+                mLoadFinisCallBack.loadFinish(null);
             }
         });
     }
