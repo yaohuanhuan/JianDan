@@ -1,12 +1,14 @@
 package com.yx.jiandan.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -16,6 +18,7 @@ import com.yx.jiandan.callback.LoadFinishCallBack;
 import com.yx.jiandan.okhttp.OkHttpCallback;
 import com.yx.jiandan.okhttp.OkHttpProxy;
 import com.yx.jiandan.okhttp.parser.FreshNewsParser;
+import com.yx.jiandan.ui.activity.FreshNewsDetailActivity;
 import com.yx.jiandan.ui.imageload.ImageLoadProxy;
 
 
@@ -32,10 +35,10 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
     private LoadFinishCallBack mLoadFinisCallBack;
     private int page;
 
-    Activity activity;
+    Activity mActivity;
 
     public FreshNewsAdapter(Activity activity,LoadFinishCallBack loadFinisCallBack) {
-        this.activity = activity;
+        this.mActivity = activity;
         mFreshNews = new ArrayList<>();
         this.mLoadFinisCallBack = loadFinisCallBack;
     }
@@ -48,18 +51,32 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
     }
 
     @Override
-    public void onBindViewHolder(FreshNewsViewHolder holder, int position) {
+    public void onBindViewHolder(FreshNewsViewHolder holder, final int position) {
         holder.tv_title.setText(mFreshNews.get(position).getTitle());
         holder.tv_name.setText(mFreshNews.get(position).getId() + "");
         holder.tv_date.setText(mFreshNews.get(position).getDate());
         options = ImageLoadProxy.getOptions4PictureList(R.mipmap.ic_loading_small);
         ImageLoadProxy.displayImage(mFreshNews.get(position).getCustomFields().getThumb_m(), holder.iv_pic, options);
+        holder.ll_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toDetailActivity(position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mFreshNews.size();
     }
+
+    private void toDetailActivity(int position) {
+        Intent intent = new Intent(mActivity, FreshNewsDetailActivity.class);
+        intent.putExtra(FreshNewsDetailActivity.DATA_FRESH_NEWS, mFreshNews);
+        intent.putExtra(FreshNewsDetailActivity.DATA_POSITION, position);
+        mActivity.startActivity(intent);
+    }
+
     public void loadFirst() {
         Log.e("test","loadFirst");
         page = 1;
@@ -94,6 +111,7 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
         TextView tv_name;
         TextView tv_date;
         ImageView iv_pic;
+        LinearLayout ll_content;
 
         public FreshNewsViewHolder(View itemView) {
             super(itemView);
@@ -101,6 +119,7 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_date = (TextView) itemView.findViewById(R.id.tv_date);
             iv_pic = (ImageView) itemView.findViewById(R.id.iv_pic);
+            ll_content = (LinearLayout) itemView.findViewById(R.id.ll_content);
         }
     }
 
