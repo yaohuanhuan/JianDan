@@ -27,7 +27,7 @@ public class FreshNews implements Serializable{
     //评论数
     private String comment_count;
     //作者
-//    private Author author;
+    private Author author;
     //自定义字段
     private CustomFields custom_fields;
 //    //标签
@@ -60,7 +60,7 @@ public class FreshNews implements Serializable{
             freshNews.setDate(jsonObject.optString("date"));
             freshNews.setComment_count(jsonObject.optString("comment_count"));
             freshNews.setThumb_c(jsonObject.optString("Thumb_c"));
-//            freshNews.setAuthor(Author.parse(jsonObject.optJSONObject("author")));
+            freshNews.setAuthor(Author.parse(jsonObject.optJSONObject("author")));
             freshNews.setCustomFields(CustomFields.parse(jsonObject.optJSONObject("custom_fields")));
 //            freshNews.setTags(Tags.parse(jsonObject.optJSONArray("tags")));
 
@@ -84,7 +84,7 @@ public class FreshNews implements Serializable{
             freshNews.setUrl(jsonObject.optString("url"));
             freshNews.setTitle(jsonObject.optString("title"));
             freshNews.setDate(jsonObject.optString("date"));
-//            freshNews.setAuthor(Author.parse(jsonObject.optJSONObject("author")));
+            freshNews.setAuthor(Author.parse(jsonObject.optJSONObject("author")));
             freshNews.setCustomFields(CustomFields.parseCache(jsonObject.optJSONObject("custom_fields")));
 //            freshNews.setTags(Tags.parseCache(jsonObject.optJSONObject("tags")));
 
@@ -99,7 +99,7 @@ public class FreshNews implements Serializable{
         return "FreshNews{" +
 //                "tags=" + tags +
                 ", customFields=" + custom_fields +
-//                ", author=" + author +
+                ", author=" + author +
                 ", comment_count='" + comment_count + '\'' +
                 ", thumb_c='" + thumb_c + '\'' +
                 ", date='" + date + '\'' +
@@ -157,14 +157,14 @@ public class FreshNews implements Serializable{
         this.comment_count = comment_count;
     }
 
-//    public Author getAuthor() {
-//        return author;
-//    }
-//
-//    public void setAuthor(Author author) {
-//        this.author = author;
-//    }
-//
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
     public CustomFields getCustomFields() {
         return custom_fields;
     }
