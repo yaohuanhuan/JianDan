@@ -14,13 +14,11 @@ import android.view.ViewGroup;
 
 import com.yx.jiandan.R;
 import com.yx.jiandan.adapter.FreshNewsAdapter;
-import com.yx.jiandan.bean.Posts;
 import com.yx.jiandan.callback.LoadFinishCallBack;
 import com.yx.jiandan.callback.LoadMoreListener;
 import com.yx.jiandan.view.AutoLoadRecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class FreshNewsFragment extends Fragment {
@@ -29,14 +27,12 @@ public class FreshNewsFragment extends Fragment {
 
     private AutoLoadRecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private List<Posts> list;
     private FreshNewsAdapter freshNewsAdapter;
     private LoadFinishCallBack mLoadFinisCallBack;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        list = new ArrayList<>();
     }
 
     @Override
