@@ -1,5 +1,7 @@
 package com.yx.jiandan.bean;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Y on 2016/8/17.
  */
+@Entity
 public class FreshNews implements Serializable{
     public static final String URL_FRESH_NEWS = "http://jandan.net/?oxwlxojflwblxbsapi=get_recent_posts&include=url,date,tags,author,title,comment_count,custom_fields&custom_fields=thumb_c,views&dev=1&page=";
 

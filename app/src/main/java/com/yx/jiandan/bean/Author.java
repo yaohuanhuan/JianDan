@@ -1,11 +1,11 @@
 package com.yx.jiandan.bean;
 
+import org.greenrobot.greendao.annotation.Entity;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 
 public class Author implements Serializable {
-
     public String id;
     public String slug;
     public String name;

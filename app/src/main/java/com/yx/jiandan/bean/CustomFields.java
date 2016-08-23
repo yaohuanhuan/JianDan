@@ -1,5 +1,6 @@
 package com.yx.jiandan.bean;
 
+import org.greenrobot.greendao.annotation.Entity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -8,6 +9,8 @@ import java.io.Serializable;
 /**
  * 新鲜事中的自定义字段
  */
+
+
 public class CustomFields implements Serializable {
 
     //自定义缩略图大小

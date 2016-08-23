@@ -2,11 +2,11 @@ package com.yx.jiandan.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 
 import com.yx.jiandan.R;
@@ -22,6 +22,8 @@ import com.yx.jiandan.utils.String2TimeUtil;
  */
 public class FreshNewsDetailFragment extends BaseFragment{
 
+    private String TAG = "FreshNewsDetailFragment";
+
     private WebView webView;
 
     private FreshNews freshNews;
@@ -34,6 +36,7 @@ public class FreshNewsDetailFragment extends BaseFragment{
         bundle.putSerializable(DATA_FRESH_NEWS, freshNews);
         FreshNewsDetailFragment fragment = new FreshNewsDetailFragment();
         fragment.setArguments(bundle);
+
         return fragment;
     }
 
@@ -41,15 +44,16 @@ public class FreshNewsDetailFragment extends BaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fresh_news_detail,container,false);
-        webView = (WebView) view.findViewById(R.id.webView);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        webView = (WebView) getView().findViewById(R.id.webView);
         freshNews = (FreshNews) getArguments().getSerializable(DATA_FRESH_NEWS);
         webView.getSettings().setJavaScriptEnabled(true);
+
         OkHttpProxy.get(FreshNews.getUrlFreshNewsDetail(freshNews.getId()), this, new OkHttpCallback<String>(new FreshNewsDetailParser()) {
 
             @Override
@@ -77,7 +81,7 @@ public class FreshNewsDetailFragment extends BaseFragment{
         super.onPause();
         if (webView != null) {
             webView.onPause();
-            webView.pauseTimers();
+
         }
     }
 

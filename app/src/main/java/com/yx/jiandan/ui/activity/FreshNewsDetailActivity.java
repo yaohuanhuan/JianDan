@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.yx.jiandan.R;
 import com.yx.jiandan.bean.FreshNews;
@@ -41,6 +42,7 @@ public class FreshNewsDetailActivity extends BaseActivity {
         int position = getIntent().getIntExtra(DATA_POSITION,0);
         viewPager.setAdapter(new FreshNewsDetailAdapter(getSupportFragmentManager(), FreshNews));
         viewPager.setCurrentItem(position);
+
     }
 
     private class FreshNewsDetailAdapter extends FragmentPagerAdapter {
