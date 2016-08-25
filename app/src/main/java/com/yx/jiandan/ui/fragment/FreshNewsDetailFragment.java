@@ -54,7 +54,7 @@ public class FreshNewsDetailFragment extends BaseFragment{
         freshNews = (FreshNews) getArguments().getSerializable(DATA_FRESH_NEWS);
         webView.getSettings().setJavaScriptEnabled(true);
 
-        OkHttpProxy.get(FreshNews.getUrlFreshNewsDetail(freshNews.getId()), this, new OkHttpCallback<String>(new FreshNewsDetailParser()) {
+        OkHttpProxy.get(FreshNews.getUrlFreshNewsDetail(freshNews.getmId()), this, new OkHttpCallback<String>(new FreshNewsDetailParser()) {
 
             @Override
             public void onSuccess(int code, String s) {

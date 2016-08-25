@@ -1,24 +1,39 @@
 package com.yx.jiandan.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * 新鲜事中的自定义字段
  */
-
-
+@Entity
 public class CustomFields implements Serializable {
-
+    @Id
+    public Long id;
     //自定义缩略图大小
     public String thumb_c;
     //中等缩略图大小
     public String thumb_m;
     //查看人数
     public String views;
+
+    @Generated(hash = 4226590)
+    public CustomFields(Long id, String thumb_c, String thumb_m, String views) {
+        this.id = id;
+        this.thumb_c = thumb_c;
+        this.thumb_m = thumb_m;
+        this.views = views;
+    }
+
+
+    @Generated(hash = 1574734666)
+    public CustomFields() {
+    }
 
     public static CustomFields parse(final JSONObject jsonObject) {
         CustomFields customFields;
@@ -72,5 +87,35 @@ public class CustomFields implements Serializable {
 
     public String getViews() {
         return views;
+    }
+
+
+    public void setViews(String views) {
+        this.views = views;
+    }
+
+
+    public void setThumb_m(String thumb_m) {
+        this.thumb_m = thumb_m;
+    }
+
+
+    public String getThumb_c() {
+        return this.thumb_c;
+    }
+
+
+    public void setThumb_c(String thumb_c) {
+        this.thumb_c = thumb_c;
+    }
+
+
+    public Long getId() {
+        return this.id;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
