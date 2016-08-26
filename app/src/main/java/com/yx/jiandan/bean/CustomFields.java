@@ -14,7 +14,7 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class CustomFields implements Serializable {
     @Id
-    public Long id;
+    public Long CustomFieldsId;
     //自定义缩略图大小
     public String thumb_c;
     //中等缩略图大小
@@ -22,9 +22,9 @@ public class CustomFields implements Serializable {
     //查看人数
     public String views;
 
-    @Generated(hash = 4226590)
-    public CustomFields(Long id, String thumb_c, String thumb_m, String views) {
-        this.id = id;
+    @Generated(hash = 540893866)
+    public CustomFields(Long CustomFieldsId, String thumb_c, String thumb_m, String views) {
+        this.CustomFieldsId = CustomFieldsId;
         this.thumb_c = thumb_c;
         this.thumb_m = thumb_m;
         this.views = views;
@@ -89,6 +89,14 @@ public class CustomFields implements Serializable {
         return views;
     }
 
+    public Long getCustomFieldsId() {
+        return CustomFieldsId;
+    }
+
+    public void setCustomFieldsId(Long customFieldsId) {
+        CustomFieldsId = customFieldsId;
+    }
+
 
     public void setViews(String views) {
         this.views = views;
@@ -107,15 +115,5 @@ public class CustomFields implements Serializable {
 
     public void setThumb_c(String thumb_c) {
         this.thumb_c = thumb_c;
-    }
-
-
-    public Long getId() {
-        return this.id;
-    }
-
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

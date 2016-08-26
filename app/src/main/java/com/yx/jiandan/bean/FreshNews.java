@@ -28,26 +28,18 @@ public class FreshNews implements Serializable {
 
     public static final String URL_FRESH_NEWS_DETAIL = "http://i.jandan.net/?oxwlxojflwblxbsapi=get_post&include=content&id=";
 
-    public Long getId() {
-        return id;
+
+    public Long getPrimaryID() {
+        return primaryID;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPrimaryID(Long primaryID) {
+        this.primaryID = primaryID;
     }
-
-    public String getmId() {
-        return mId;
-    }
-
-    public void setmId(String mId) {
-        this.mId = mId;
-    }
-
     @Id
-    public Long id;
+    private Long primaryID;
     //文章id
-    private String mId;
+    private String id;
     //文章标题
     private String title;
     //文章地址
@@ -59,13 +51,13 @@ public class FreshNews implements Serializable {
     //评论数
     private String comment_count;
     //作者
-    @ToOne(joinProperty = "id")
+    @ToOne(joinProperty="primaryID")
     private Author author;
     //自定义字段
-    @ToOne(joinProperty = "id")
+    @ToOne(joinProperty="primaryID")
     private CustomFields custom_fields;
     //标签
-    @ToOne(joinProperty = "id")
+    @ToOne(joinProperty="primaryID")
     private Tags tags;
 
     @Generated(hash = 1393763894)
@@ -88,10 +80,10 @@ public class FreshNews implements Serializable {
     public FreshNews() {
     }
 
-    @Generated(hash = 1475155560)
-    public FreshNews(Long id, String mId, String title, String url, String date, String thumb_c, String comment_count) {
+    @Generated(hash = 2107114343)
+    public FreshNews(Long primaryID, String id, String title, String url, String date, String thumb_c, String comment_count) {
+        this.primaryID = primaryID;
         this.id = id;
-        this.mId = mId;
         this.title = title;
         this.url = url;
         this.date = date;
@@ -117,7 +109,7 @@ public class FreshNews implements Serializable {
             FreshNews freshNews = new FreshNews();
             JSONObject jsonObject = postsArray.optJSONObject(i);
 
-            freshNews.setmId(jsonObject.optString("id"));
+            freshNews.setId(jsonObject.optString("id"));
             freshNews.setUrl(jsonObject.optString("url"));
             freshNews.setTitle(jsonObject.optString("title"));
             freshNews.setDate(jsonObject.optString("date"));
@@ -142,7 +134,7 @@ public class FreshNews implements Serializable {
             FreshNews freshNews = new FreshNews();
             JSONObject jsonObject = postsArray.optJSONObject(i);
 
-            freshNews.setmId(jsonObject.optString("id"));
+            freshNews.setId(jsonObject.optString("id"));
             freshNews.setUrl(jsonObject.optString("url"));
             freshNews.setTitle(jsonObject.optString("title"));
             freshNews.setDate(jsonObject.optString("date"));
@@ -168,11 +160,17 @@ public class FreshNews implements Serializable {
                 ", date='" + date + '\'' +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
-                ", id='" + mId + '\'' +
+                ", id='" + id + '\'' +
                 '}';
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -275,19 +273,19 @@ public class FreshNews implements Serializable {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 911692897)
+    @Generated(hash = 133795476)
     public void setCustom_fields(CustomFields custom_fields) {
         synchronized (this) {
             this.custom_fields = custom_fields;
-            id = custom_fields == null ? null : custom_fields.getId();
-            custom_fields__resolvedKey = id;
+            primaryID = custom_fields == null ? null : custom_fields.getCustomFieldsId();
+            custom_fields__resolvedKey = primaryID;
         }
     }
 
     /** To-one relationship, resolved on first access. */
-    @Generated(hash = 518982979)
+    @Generated(hash = 2019553966)
     public CustomFields getCustom_fields() {
-        Long __key = this.id;
+        Long __key = this.primaryID;
         if (custom_fields__resolvedKey == null || !custom_fields__resolvedKey.equals(__key)) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
@@ -309,14 +307,4 @@ public class FreshNews implements Serializable {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getFreshNewsDao() : null;
     }
-
-    public String getMId() {
-        return this.mId;
-    }
-
-    public void setMId(String mId) {
-        this.mId = mId;
-    }
-
-
 }

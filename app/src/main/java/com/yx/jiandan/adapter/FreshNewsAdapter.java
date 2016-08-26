@@ -15,6 +15,9 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.yx.jiandan.R;
 import com.yx.jiandan.bean.FreshNews;
 import com.yx.jiandan.callback.LoadFinishCallBack;
+import com.yx.jiandan.gen.DaoMaster;
+import com.yx.jiandan.gen.DaoSession;
+import com.yx.jiandan.gen.FreshNewsDao;
 import com.yx.jiandan.okhttp.OkHttpCallback;
 import com.yx.jiandan.okhttp.OkHttpProxy;
 import com.yx.jiandan.okhttp.parser.FreshNewsParser;
@@ -78,7 +81,6 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
     }
 
     public void loadFirst() {
-        Log.e("test","loadFirst");
         page = 1;
         loadDate();
     }
@@ -88,13 +90,16 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
         loadDate();
     }
     public void loadDate() {
-        Log.e("test","page == "+page);
         OkHttpProxy.get(FreshNews.getUrlFreshNews(page), new OkHttpCallback<ArrayList<FreshNews>>(new FreshNewsParser()) {
-
             @Override
             public void onSuccess(int code, ArrayList<FreshNews> freshNewses) {
                 mLoadFinisCallBack.loadFinish(null);
                 mFreshNews.addAll(freshNewses);
+                DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(mActivity, "freshnews-db", null);
+                DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
+                DaoSession daoSession = daoMaster.newSession();
+                FreshNewsDao freshNewsDao = daoSession.getFreshNewsDao();
+                freshNewsDao.insertInTx(freshNewses);
                 notifyDataSetChanged();
             }
 
