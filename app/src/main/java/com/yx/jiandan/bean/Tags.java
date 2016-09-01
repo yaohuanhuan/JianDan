@@ -2,6 +2,7 @@ package com.yx.jiandan.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.ToOne;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,16 +14,16 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class Tags implements Serializable {
-    @Id
-    public Long TagsId;
 
+    @Id
+    public Long tagsId;
     private int id;
     private String title;
     private String description;
 
-    @Generated(hash = 1552376533)
-    public Tags(Long TagsId, int id, String title, String description) {
-        this.TagsId = TagsId;
+    @Generated(hash = 1634080722)
+    public Tags(Long tagsId, int id, String title, String description) {
+        this.tagsId = tagsId;
         this.id = id;
         this.title = title;
         this.description = description;
@@ -85,12 +86,13 @@ public class Tags implements Serializable {
         this.description = description;
     }
 
-    public Long getTagsId() {
-        return TagsId;
-    }
 
     public void setTagsId(Long tagsId) {
-        TagsId = tagsId;
+        this.tagsId = tagsId;
+    }
+
+    public Long getTagsId() {
+        return this.tagsId;
     }
 
 }

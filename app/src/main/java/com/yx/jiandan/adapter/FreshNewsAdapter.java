@@ -13,11 +13,16 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.yx.jiandan.R;
+import com.yx.jiandan.bean.CustomFields;
 import com.yx.jiandan.bean.FreshNews;
+import com.yx.jiandan.bean.Tags;
 import com.yx.jiandan.callback.LoadFinishCallBack;
+import com.yx.jiandan.gen.AuthorDao;
+import com.yx.jiandan.gen.CustomFieldsDao;
 import com.yx.jiandan.gen.DaoMaster;
 import com.yx.jiandan.gen.DaoSession;
 import com.yx.jiandan.gen.FreshNewsDao;
+import com.yx.jiandan.gen.TagsDao;
 import com.yx.jiandan.okhttp.OkHttpCallback;
 import com.yx.jiandan.okhttp.OkHttpProxy;
 import com.yx.jiandan.okhttp.parser.FreshNewsParser;
@@ -95,12 +100,18 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
             public void onSuccess(int code, ArrayList<FreshNews> freshNewses) {
                 mLoadFinisCallBack.loadFinish(null);
                 mFreshNews.addAll(freshNewses);
+                notifyDataSetChanged();
+
+
                 DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(mActivity, "freshnews-db", null);
                 DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
                 DaoSession daoSession = daoMaster.newSession();
                 FreshNewsDao freshNewsDao = daoSession.getFreshNewsDao();
-                freshNewsDao.insertInTx(freshNewses);
-                notifyDataSetChanged();
+                AuthorDao authorDao = daoSession.getAuthorDao();
+                CustomFieldsDao customFieldsDao = daoSession.getCustomFieldsDao();
+                TagsDao tagsDao = daoSession.getTagsDao();
+
+
             }
 
             @Override

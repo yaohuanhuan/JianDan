@@ -2,6 +2,7 @@ package com.yx.jiandan.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.ToOne;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class CustomFields implements Serializable {
     @Id
-    public Long CustomFieldsId;
+    public Long customFieldsId;
     //自定义缩略图大小
     public String thumb_c;
     //中等缩略图大小
@@ -22,9 +23,10 @@ public class CustomFields implements Serializable {
     //查看人数
     public String views;
 
-    @Generated(hash = 540893866)
-    public CustomFields(Long CustomFieldsId, String thumb_c, String thumb_m, String views) {
-        this.CustomFieldsId = CustomFieldsId;
+
+    @Generated(hash = 1867367561)
+    public CustomFields(Long customFieldsId, String thumb_c, String thumb_m, String views) {
+        this.customFieldsId = customFieldsId;
         this.thumb_c = thumb_c;
         this.thumb_m = thumb_m;
         this.views = views;
@@ -34,6 +36,7 @@ public class CustomFields implements Serializable {
     @Generated(hash = 1574734666)
     public CustomFields() {
     }
+
 
     public static CustomFields parse(final JSONObject jsonObject) {
         CustomFields customFields;
@@ -89,15 +92,6 @@ public class CustomFields implements Serializable {
         return views;
     }
 
-    public Long getCustomFieldsId() {
-        return CustomFieldsId;
-    }
-
-    public void setCustomFieldsId(Long customFieldsId) {
-        CustomFieldsId = customFieldsId;
-    }
-
-
     public void setViews(String views) {
         this.views = views;
     }
@@ -116,4 +110,15 @@ public class CustomFields implements Serializable {
     public void setThumb_c(String thumb_c) {
         this.thumb_c = thumb_c;
     }
+
+
+    public void setCustomFieldsId(Long customFieldsId) {
+        this.customFieldsId = customFieldsId;
+    }
+
+
+    public Long getCustomFieldsId() {
+        return this.customFieldsId;
+    }
+
 }

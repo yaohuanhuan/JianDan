@@ -2,6 +2,7 @@ package com.yx.jiandan.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.ToOne;
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -9,8 +10,7 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class Author implements Serializable {
     @Id
-    public Long AuthorId;
-
+    public Long authorId;
     public String id;
     public String slug;
     public String name;
@@ -20,11 +20,12 @@ public class Author implements Serializable {
     public String url;
     public String description;
 
-    @Generated(hash = 353705216)
-    public Author(Long AuthorId, String id, String slug, String name,
+
+    @Generated(hash = 245470019)
+    public Author(Long authorId, String id, String slug, String name,
             String first_name, String last_name, String nickname, String url,
             String description) {
-        this.AuthorId = AuthorId;
+        this.authorId = authorId;
         this.id = id;
         this.slug = slug;
         this.name = name;
@@ -38,6 +39,7 @@ public class Author implements Serializable {
     @Generated(hash = 64241762)
     public Author() {
     }
+
 
     public static Author parse(final JSONObject jsonObject) {
         Author author;
@@ -89,14 +91,6 @@ public class Author implements Serializable {
         this.description = description;
     }
 
-    public Long getAuthorId() {
-        return AuthorId;
-    }
-
-    public void setAuthorId(Long authorId) {
-        AuthorId = authorId;
-    }
-
     public String getNickname() {
         return this.nickname;
     }
@@ -128,4 +122,14 @@ public class Author implements Serializable {
     public void setSlug(String slug) {
         this.slug = slug;
     }
+
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
+    }
+
+    public Long getAuthorId() {
+        return this.authorId;
+    }
+
 }

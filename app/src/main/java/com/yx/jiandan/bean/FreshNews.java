@@ -17,6 +17,7 @@ import com.yx.jiandan.gen.AuthorDao;
 import com.yx.jiandan.gen.CustomFieldsDao;
 import com.yx.jiandan.gen.TagsDao;
 
+
 /**
  * 新鲜事
  * Created by zhaokaiqiang on 15/4/24.
@@ -29,15 +30,11 @@ public class FreshNews implements Serializable {
     public static final String URL_FRESH_NEWS_DETAIL = "http://i.jandan.net/?oxwlxojflwblxbsapi=get_post&include=content&id=";
 
 
-    public Long getPrimaryID() {
-        return primaryID;
-    }
 
-    public void setPrimaryID(Long primaryID) {
-        this.primaryID = primaryID;
-    }
-    @Id
-    private Long primaryID;
+    //主键id
+    @Id(autoincrement = true)
+    private Long primarykey;
+
     //文章id
     private String id;
     //文章标题
@@ -51,13 +48,13 @@ public class FreshNews implements Serializable {
     //评论数
     private String comment_count;
     //作者
-    @ToOne(joinProperty="primaryID")
+    @ToOne(joinProperty = "primarykey")
     private Author author;
     //自定义字段
-    @ToOne(joinProperty="primaryID")
+    @ToOne(joinProperty = "primarykey")
     private CustomFields custom_fields;
     //标签
-    @ToOne(joinProperty="primaryID")
+    @ToOne(joinProperty = "primarykey")
     private Tags tags;
 
     @Generated(hash = 1393763894)
@@ -77,12 +74,10 @@ public class FreshNews implements Serializable {
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    public FreshNews() {
-    }
 
-    @Generated(hash = 2107114343)
-    public FreshNews(Long primaryID, String id, String title, String url, String date, String thumb_c, String comment_count) {
-        this.primaryID = primaryID;
+    @Generated(hash = 950509508)
+    public FreshNews(Long primarykey, String id, String title, String url, String date, String thumb_c, String comment_count) {
+        this.primarykey = primarykey;
         this.id = id;
         this.title = title;
         this.url = url;
@@ -90,6 +85,11 @@ public class FreshNews implements Serializable {
         this.thumb_c = thumb_c;
         this.comment_count = comment_count;
     }
+
+    @Generated(hash = 7862091)
+    public FreshNews() {
+    }
+
 
     public static String getUrlFreshNews(int page) {
         return URL_FRESH_NEWS + page;
@@ -105,15 +105,20 @@ public class FreshNews implements Serializable {
         ArrayList<FreshNews> freshNewses = new ArrayList<>();
 
         for (int i = 0; i < postsArray.length(); i++) {
+            JSONObject jsonObject = postsArray.optJSONObject(i);
+//            FreshNews freshNews = new FreshNews((long) 15,jsonObject.optString("id"),jsonObject.optString("title"),jsonObject.optString("url"),
+//                    jsonObject.optString("date"),jsonObject.optString("date"),jsonObject.optString("comment_count"));
 
             FreshNews freshNews = new FreshNews();
-            JSONObject jsonObject = postsArray.optJSONObject(i);
 
+            freshNews.setPrimarykey(null);
             freshNews.setId(jsonObject.optString("id"));
-            freshNews.setUrl(jsonObject.optString("url"));
             freshNews.setTitle(jsonObject.optString("title"));
+            freshNews.setUrl(jsonObject.optString("url"));
             freshNews.setDate(jsonObject.optString("date"));
+
             freshNews.setComment_count(jsonObject.optString("comment_count"));
+
             freshNews.setAuthor(Author.parse(jsonObject.optJSONObject("author")));
             freshNews.setCustomFields(CustomFields.parse(jsonObject.optJSONObject("custom_fields")));
             freshNews.setTags(Tags.parse(jsonObject.optJSONArray("tags")));
@@ -236,6 +241,14 @@ public class FreshNews implements Serializable {
         this.tags = tags;
     }
 
+    public Long getPrimarykey() {
+        return primarykey;
+    }
+
+    public void setPrimarykey(Long primarykey) {
+        this.primarykey = primarykey;
+    }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
      * Entity must attached to an entity context.
@@ -273,19 +286,19 @@ public class FreshNews implements Serializable {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 133795476)
+    @Generated(hash = 50164157)
     public void setCustom_fields(CustomFields custom_fields) {
         synchronized (this) {
             this.custom_fields = custom_fields;
-            primaryID = custom_fields == null ? null : custom_fields.getCustomFieldsId();
-            custom_fields__resolvedKey = primaryID;
+            primarykey = custom_fields == null ? null : custom_fields.getCustomFieldsId();
+            custom_fields__resolvedKey = primarykey;
         }
     }
 
     /** To-one relationship, resolved on first access. */
-    @Generated(hash = 2019553966)
+    @Generated(hash = 2076796614)
     public CustomFields getCustom_fields() {
-        Long __key = this.primaryID;
+        Long __key = this.primarykey;
         if (custom_fields__resolvedKey == null || !custom_fields__resolvedKey.equals(__key)) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
@@ -307,4 +320,6 @@ public class FreshNews implements Serializable {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getFreshNewsDao() : null;
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.yx.jiandan.ui.base;
 
 import android.app.Application;
 
+import com.yx.jiandan.db.AbstractDatabaseManager;
 import com.yx.jiandan.ui.imageload.ImageLoadProxy;
 
 /**
@@ -12,8 +13,8 @@ public class JDApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        ImageLoadProxy.initImageLoader(this);       //初始化图片加载的代理
+        AbstractDatabaseManager.initOpenHelper(getApplicationContext());//初始化数据库
+        ImageLoadProxy.initImageLoader(getApplicationContext());       //初始化图片加载的代理
 
     }
 }
