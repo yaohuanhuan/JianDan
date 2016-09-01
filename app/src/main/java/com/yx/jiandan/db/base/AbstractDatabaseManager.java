@@ -1,4 +1,4 @@
-package com.yx.jiandan.db;
+package com.yx.jiandan.db.base;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -322,5 +322,5 @@ public abstract class AbstractDatabaseManager<M,K> implements IDatabase<M,K> {
      * 获取Dao
      * @return
      */
-    abstract AbstractDao<M, K> getAbstractDao();
+    public abstract AbstractDao<M, K> getAbstractDao();
 }

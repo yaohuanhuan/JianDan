@@ -17,6 +17,7 @@ import com.yx.jiandan.bean.CustomFields;
 import com.yx.jiandan.bean.FreshNews;
 import com.yx.jiandan.bean.Tags;
 import com.yx.jiandan.callback.LoadFinishCallBack;
+import com.yx.jiandan.db.manager.FreshNewsManager;
 import com.yx.jiandan.gen.AuthorDao;
 import com.yx.jiandan.gen.CustomFieldsDao;
 import com.yx.jiandan.gen.DaoMaster;
@@ -101,15 +102,8 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
                 mLoadFinisCallBack.loadFinish(null);
                 mFreshNews.addAll(freshNewses);
                 notifyDataSetChanged();
+                new FreshNewsManager().insert(new FreshNews());
 
-
-                DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(mActivity, "freshnews-db", null);
-                DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
-                DaoSession daoSession = daoMaster.newSession();
-                FreshNewsDao freshNewsDao = daoSession.getFreshNewsDao();
-                AuthorDao authorDao = daoSession.getAuthorDao();
-                CustomFieldsDao customFieldsDao = daoSession.getCustomFieldsDao();
-                TagsDao tagsDao = daoSession.getTagsDao();
 
 
             }

@@ -2,7 +2,7 @@ package com.yx.jiandan.ui.base;
 
 import android.app.Application;
 
-import com.yx.jiandan.db.AbstractDatabaseManager;
+import com.yx.jiandan.db.base.AbstractDatabaseManager;
 import com.yx.jiandan.ui.imageload.ImageLoadProxy;
 
 /**

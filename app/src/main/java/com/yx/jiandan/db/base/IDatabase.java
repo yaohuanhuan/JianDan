@@ -1,4 +1,4 @@
-package com.yx.jiandan.db;
+package com.yx.jiandan.db.base;
 
 import android.support.annotation.NonNull;
 
