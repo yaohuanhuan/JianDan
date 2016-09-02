@@ -13,11 +13,15 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.yx.jiandan.R;
+import com.yx.jiandan.bean.Author;
 import com.yx.jiandan.bean.CustomFields;
 import com.yx.jiandan.bean.FreshNews;
 import com.yx.jiandan.bean.Tags;
 import com.yx.jiandan.callback.LoadFinishCallBack;
+import com.yx.jiandan.db.manager.AuthorManageer;
+import com.yx.jiandan.db.manager.CustomFieldsManager;
 import com.yx.jiandan.db.manager.FreshNewsManager;
+import com.yx.jiandan.db.manager.TagsManager;
 import com.yx.jiandan.gen.AuthorDao;
 import com.yx.jiandan.gen.CustomFieldsDao;
 import com.yx.jiandan.gen.DaoMaster;
@@ -98,11 +102,43 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
     public void loadDate() {
         OkHttpProxy.get(FreshNews.getUrlFreshNews(page), new OkHttpCallback<ArrayList<FreshNews>>(new FreshNewsParser()) {
             @Override
-            public void onSuccess(int code, ArrayList<FreshNews> freshNewses) {
+            public void onSuccess(int code, final ArrayList<FreshNews> freshNewses) {
                 mLoadFinisCallBack.loadFinish(null);
                 mFreshNews.addAll(freshNewses);
                 notifyDataSetChanged();
-                new FreshNewsManager().insert(new FreshNews());
+                final FreshNewsManager freshNewsManager = new FreshNewsManager();
+                final AuthorManageer authorManageer = new AuthorManageer();
+                final CustomFieldsManager customFieldsManager = new CustomFieldsManager();
+                final TagsManager tagsManager = new TagsManager();
+
+                if (page == 1){
+                    freshNewsManager.deleteAll();
+                    customFieldsManager.deleteAll();
+                    tagsManager.deleteAll();
+                    authorManageer.deleteAll();
+                }
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (FreshNews freshNews : freshNewses){
+                            FreshNews mFreshNews = freshNews;
+                            mFreshNews.setPage(page);
+                            freshNewsManager.insert(mFreshNews);
+                            Author author = mFreshNews.getAuthor();
+                            author.setAuthorId(mFreshNews.getPrimarykey());
+                            authorManageer.insert(author);
+                            CustomFields customFields = mFreshNews.getCustomFields();
+                            customFields.setCustomFieldsId(mFreshNews.getPrimarykey());
+                            customFieldsManager.insert(customFields);
+                            Tags tags = mFreshNews.getTags();
+                            tags.setTagsId(mFreshNews.getPrimarykey());
+                            tagsManager.insert(tags);
+                        }
+
+                    }
+                }).start();
+
 
 
 

@@ -35,6 +35,7 @@ public class FreshNews implements Serializable {
     @Id(autoincrement = true)
     private Long primarykey;
 
+    private int page;
     //文章id
     private String id;
     //文章标题
@@ -75,9 +76,10 @@ public class FreshNews implements Serializable {
     private transient DaoSession daoSession;
 
 
-    @Generated(hash = 950509508)
-    public FreshNews(Long primarykey, String id, String title, String url, String date, String thumb_c, String comment_count) {
+    @Generated(hash = 1300582718)
+    public FreshNews(Long primarykey, int page, String id, String title, String url, String date, String thumb_c, String comment_count) {
         this.primarykey = primarykey;
+        this.page = page;
         this.id = id;
         this.title = title;
         this.url = url;
@@ -215,6 +217,14 @@ public class FreshNews implements Serializable {
 
     public void setComment_count(String comment_count) {
         this.comment_count = comment_count;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
     @Keep
     public Author getAuthor() {
