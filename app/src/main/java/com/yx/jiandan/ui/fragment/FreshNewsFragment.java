@@ -68,7 +68,6 @@ public class FreshNewsFragment extends Fragment {
         recyclerView.setLoadMoreListener(new LoadMoreListener() {
             @Override
             public void loadMore() {
-                Log.e(TAG,"加载跟多！");
                 freshNewsAdapter.loadNextPage();
             }
         });

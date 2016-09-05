@@ -7,14 +7,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.yx.jiandan.R;
+import com.yx.jiandan.eventbus.MessageEvent;
 import com.yx.jiandan.ui.fragment.FreshNewsFragment;
 import com.yx.jiandan.ui.fragment.JokeFragment;
 import com.yx.jiandan.ui.fragment.PictureFragment;
 import com.yx.jiandan.ui.fragment.SettingFragment;
 import com.yx.jiandan.ui.fragment.SisterFragment;
 import com.yx.jiandan.ui.fragment.VideoFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -35,10 +41,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
         bindViews();
         rl_1.performClick();
 
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void helloEventBus(MessageEvent message){
+        Toast.makeText(MainActivity.this,message.test,Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -62,9 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * 重置所有文本的选中状态
-     */
-
-    private void setSelected() {
+     */ void setSelected() {
         rl_1.setSelected(false);
         rl_2.setSelected(false);
         rl_3.setSelected(false);

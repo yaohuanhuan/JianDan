@@ -33,6 +33,7 @@ import com.yx.jiandan.okhttp.OkHttpProxy;
 import com.yx.jiandan.okhttp.parser.FreshNewsParser;
 import com.yx.jiandan.ui.activity.FreshNewsDetailActivity;
 import com.yx.jiandan.ui.imageload.ImageLoadProxy;
+import com.yx.jiandan.utils.NetWorkUtil;
 
 
 import java.util.ArrayList;
@@ -100,55 +101,57 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
         loadDate();
     }
     public void loadDate() {
-        OkHttpProxy.get(FreshNews.getUrlFreshNews(page), new OkHttpCallback<ArrayList<FreshNews>>(new FreshNewsParser()) {
-            @Override
-            public void onSuccess(int code, final ArrayList<FreshNews> freshNewses) {
-                mLoadFinisCallBack.loadFinish(null);
-                mFreshNews.addAll(freshNewses);
-                notifyDataSetChanged();
-                final FreshNewsManager freshNewsManager = new FreshNewsManager();
-                final AuthorManageer authorManageer = new AuthorManageer();
-                final CustomFieldsManager customFieldsManager = new CustomFieldsManager();
-                final TagsManager tagsManager = new TagsManager();
+        final FreshNewsManager freshNewsManager = new FreshNewsManager();
+        final AuthorManageer authorManageer = new AuthorManageer();
+        final CustomFieldsManager customFieldsManager = new CustomFieldsManager();
+        final TagsManager tagsManager = new TagsManager();
+        if (NetWorkUtil.isNetWorkConnected(mActivity)){
+            OkHttpProxy.get(FreshNews.getUrlFreshNews(page), new OkHttpCallback<ArrayList<FreshNews>>(new FreshNewsParser()) {
+                @Override
+                public void onSuccess(int code, final ArrayList<FreshNews> freshNewses) {
+                    mLoadFinisCallBack.loadFinish(null);
+                    mFreshNews.addAll(freshNewses);
+                    notifyDataSetChanged();
+                    if (page == 1){
 
-                if (page == 1){
-                    freshNewsManager.deleteAll();
-                    customFieldsManager.deleteAll();
-                    tagsManager.deleteAll();
-                    authorManageer.deleteAll();
+                        freshNewsManager.deleteAll();
+                        customFieldsManager.deleteAll();
+                        tagsManager.deleteAll();
+                        authorManageer.deleteAll();
+                    }
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (FreshNews freshNews : freshNewses){
+                                FreshNews mFreshNews = freshNews;
+                                mFreshNews.setPage(page);
+                                freshNewsManager.insert(mFreshNews);
+                                Author author = mFreshNews.getAuthor();
+                                author.setAuthorId(mFreshNews.getPrimarykey());
+                                authorManageer.insert(author);
+                                CustomFields customFields = mFreshNews.getCustomFields();
+                                customFields.setCustomFieldsId(mFreshNews.getPrimarykey());
+                                customFieldsManager.insert(customFields);
+                                Tags tags = mFreshNews.getTags();
+                                tags.setTagsId(mFreshNews.getPrimarykey());
+                                tagsManager.insert(tags);
+                            }
+                        }
+                    }).start();
                 }
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (FreshNews freshNews : freshNewses){
-                            FreshNews mFreshNews = freshNews;
-                            mFreshNews.setPage(page);
-                            freshNewsManager.insert(mFreshNews);
-                            Author author = mFreshNews.getAuthor();
-                            author.setAuthorId(mFreshNews.getPrimarykey());
-                            authorManageer.insert(author);
-                            CustomFields customFields = mFreshNews.getCustomFields();
-                            customFields.setCustomFieldsId(mFreshNews.getPrimarykey());
-                            customFieldsManager.insert(customFields);
-                            Tags tags = mFreshNews.getTags();
-                            tags.setTagsId(mFreshNews.getPrimarykey());
-                            tagsManager.insert(tags);
-                        }
+                @Override
+                public void onFailure(int code, String msg) {
+                    mLoadFinisCallBack.loadFinish(null);
+                }
+            });
+        }else {
+//            ArrayList<FreshNews> list = new ArrayList<>();
+//            list =
+//            for ()
+        }
 
-                    }
-                }).start();
-
-
-
-
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                mLoadFinisCallBack.loadFinish(null);
-            }
-        });
     }
 
     public static class FreshNewsViewHolder extends RecyclerView.ViewHolder {
