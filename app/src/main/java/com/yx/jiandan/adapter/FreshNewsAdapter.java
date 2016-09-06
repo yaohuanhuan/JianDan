@@ -36,7 +36,10 @@ import com.yx.jiandan.ui.imageload.ImageLoadProxy;
 import com.yx.jiandan.utils.NetWorkUtil;
 
 
+import org.greenrobot.greendao.query.QueryBuilder;
+
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -147,9 +150,15 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
                 }
             });
         }else {
-//            ArrayList<FreshNews> list = new ArrayList<>();
-//            list =
-//            for ()
+            List<FreshNews> list = new ArrayList<>();
+            QueryBuilder qb = freshNewsManager.getQueryBuilder();
+            list = qb.where(FreshNewsDao.Properties.Page.eq(page)).list();
+
+            mFreshNews.clear();
+            notifyDataSetChanged();
+            mFreshNews.addAll(list);
+
+
         }
 
     }

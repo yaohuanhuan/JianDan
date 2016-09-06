@@ -41,21 +41,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
         bindViews();
         rl_1.performClick();
 
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void helloEventBus(MessageEvent message){
-        Toast.makeText(MainActivity.this,message.test,Toast.LENGTH_SHORT).show();
     }
 
     /**

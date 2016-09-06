@@ -1,62 +1,66 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
+     <!--Base application theme.-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="windowNoTitle">true</item>
+
+    </style>
+    <!--<style name="ImageTranslucentTheme" parent="AppTheme">-->
+        <!--&lt;!&ndash;在Android 4.4之前的版本上运行，直接跟随系统主题&ndash;&gt;-->
+    <!--</style>-->
+    <!--Base Theme-->
+    <!--<style name="AppTheme.Base" parent="Theme.AppCompat.Light">-->
+        <!--&lt;!&ndash;no actionbar and title&ndash;&gt;-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
+        <!--&lt;!&ndash;action bar color&ndash;&gt;-->
+        <!--<item name="colorPrimary">@color/primary</item>-->
+        <!--&lt;!&ndash;status bar color&ndash;&gt;-->
+        <!--<item name="colorPrimaryDark">@color/primary_dark</item>-->
+        <!--&lt;!&ndash;window background&ndash;&gt;-->
+        <!--<item name="android:windowBackground">@color/comment_bg</item>-->
     <!--</style>-->
 
-    <!--Base Theme-->
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light">
-        <!--no actionbar and title-->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <!--action bar color-->
-        <item name="colorPrimary">@color/primary</item>
-        <!--status bar color-->
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <!--window background-->
-        <item name="android:windowBackground">@color/comment_bg</item>
-    </style>
+    <!--&lt;!&ndash; Normal application theme. &ndash;&gt;-->
+    <!--<style name="AppTheme" parent="AppTheme.Base">-->
+        <!--<item name="actionBarStyle">@style/JDActionBarStyle</item>-->
+        <!--<item name="drawerArrowStyle">@style/AppTheme.JDDrawerArrowStyle</item>-->
+        <!--&lt;!&ndash;actionbar text color&ndash;&gt;-->
+        <!--<item name="android:textColorPrimary">@color/primary_text</item>-->
+    <!--</style>-->
 
-    <!-- Normal application theme. -->
-    <style name="AppTheme" parent="AppTheme.Base">
-        <item name="actionBarStyle">@style/JDActionBarStyle</item>
-        <item name="drawerArrowStyle">@style/AppTheme.JDDrawerArrowStyle</item>
-        <!--actionbar text color-->
-        <item name="android:textColorPrimary">@color/primary_text</item>
-    </style>
+    <!--&lt;!&ndash; 设置标题栏样式 &ndash;&gt;-->
+    <!--<style name="JDActionBarStyle" parent="Widget.AppCompat.Light.ActionBar">-->
+        <!--<item name="titleTextStyle">@style/ActionBarTitleStyle</item>-->
+    <!--</style>-->
 
-    <!-- 设置标题栏样式 -->
-    <style name="JDActionBarStyle" parent="Widget.AppCompat.Light.ActionBar">
-        <item name="titleTextStyle">@style/ActionBarTitleStyle</item>
-    </style>
+    <!--<style name="AppTheme.JDDrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">-->
+        <!--&lt;!&ndash;是否开启导航图标的旋转效果&ndash;&gt;-->
+        <!--<item name="spinBars">false</item>-->
+        <!--<item name="color">@android:color/white</item>-->
+    <!--</style>-->
 
-    <style name="AppTheme.JDDrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <!--是否开启导航图标的旋转效果-->
-        <item name="spinBars">false</item>
-        <item name="color">@android:color/white</item>
-    </style>
+    <!--&lt;!&ndash; 标题栏文字样式 &ndash;&gt;-->
+    <!--<style name="ActionBarTitleStyle" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title">-->
+        <!--<item name="android:textSize">16sp</item>-->
+        <!--<item name="android:textColor">@color/actionbar_title</item>-->
+    <!--</style>-->
 
-    <!-- 标题栏文字样式 -->
-    <style name="ActionBarTitleStyle" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/actionbar_title</item>
-    </style>
+    <!--&lt;!&ndash;图片详情页 &ndash;&gt;-->
+    <!--<style name="ImageDetailActivityTheme" parent="Theme.AppCompat.NoActionBar">-->
+        <!--<item name="android:windowBackground">@android:color/black</item>-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <!--<item name="android:windowFullscreen">true</item>-->
+    <!--</style>-->
 
-    <!--图片详情页 -->
-    <style name="ImageDetailActivityTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@android:color/black</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowFullscreen">true</item>
-    </style>
-
-    <!-- 新鲜事详情页-->
-    <style name="FreshNewsDetailActivityTheme" parent="@style/AppTheme">
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="windowActionBarOverlay">true</item>
-    </style>
+    <!--&lt;!&ndash; 新鲜事详情页&ndash;&gt;-->
+    <!--<style name="FreshNewsDetailActivityTheme" parent="@style/AppTheme">-->
+        <!--<item name="android:windowActionBarOverlay">true</item>-->
+        <!--<item name="windowActionBarOverlay">true</item>-->
+    <!--</style>-->
 
 </resources>
