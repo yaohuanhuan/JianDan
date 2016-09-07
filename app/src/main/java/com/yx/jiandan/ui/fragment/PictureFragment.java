@@ -3,6 +3,8 @@ package com.yx.jiandan.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ public class PictureFragment extends Fragment {
     private TextView mText2;
     private Button button;
     private Button button2;
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +44,7 @@ public class PictureFragment extends Fragment {
         mText2 = (TextView) getView().findViewById(R.id.tv_text2);
         button = (Button) getView().findViewById(R.id.testButton);
         button2 = (Button) getView().findViewById(R.id.testButton2);
+        coordinatorLayout = (CoordinatorLayout) getView().findViewById(R.id.CoordinatorLayout);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,6 +68,12 @@ public class PictureFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void helloEventBus(MessageEvent message){
+        Snackbar.make(coordinatorLayout,"I am snackbar!",Snackbar.LENGTH_LONG).setAction("I am action!", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"我是吐司！",Toast.LENGTH_SHORT).show();
+            }
+        }).show();
         mText.setText(message.test);
     }
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
