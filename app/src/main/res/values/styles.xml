@@ -7,7 +7,14 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="windowNoTitle">true</item>
+        <item name="drawerArrowStyle" >@style/AppTheme.JDDrawerArrowStyle</item>
 
+    </style>
+
+    <style name="AppTheme.JDDrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <!--是否开启导航图标的旋转效果-->
+        <item name="spinBars">false</item>
+        <item name="color">@android:color/white</item>
     </style>
     <!--<style name="ImageTranslucentTheme" parent="AppTheme">-->
         <!--&lt;!&ndash;在Android 4.4之前的版本上运行，直接跟随系统主题&ndash;&gt;-->
