@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,11 +16,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.yx.jiandan.R;
 import com.yx.jiandan.adapter.FreshNewsAdapter;
 import com.yx.jiandan.callback.LoadFinishCallBack;
 import com.yx.jiandan.callback.LoadMoreListener;
+import com.yx.jiandan.ui.activity.MainActivity;
 import com.yx.jiandan.view.AutoLoadRecyclerView;
 
 import java.util.ArrayList;
@@ -48,6 +52,7 @@ public class FreshNewsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         recyclerView = (AutoLoadRecyclerView) getView().findViewById(R.id.recycler_view);
         swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -79,12 +84,19 @@ public class FreshNewsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_refresh, menu);
+        inflater.inflate(R.menu.base_toolbar_menu, menu);
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.item1:
+                Toast.makeText(getActivity(), "新鲜事", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+        return true;
 
     }
 

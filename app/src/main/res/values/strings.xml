@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">被强煎的蛋</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="freshes_news">新鲜事</string>
+    <string name="boring_picture">无聊图</string>
+    <string name="sister_picture">妹子图</string>
+    <string name="joke">段子</string>
+    <string name="video">小电影</string>
 </resources>

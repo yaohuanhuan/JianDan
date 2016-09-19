@@ -1,7 +1,6 @@
 package com.yx.jiandan.ui.activity;
 
-import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
+
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -9,6 +8,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.RelativeLayout;
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout rl_1,rl_2,rl_3,rl_4,rl_5;
 
     private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
+//    private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
 
 
@@ -50,38 +50,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+
     private void initView(){
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);//设置Toolbar标题
         toolbar.setTitleTextColor(getResources().getColor(R.color.icons)); //设置标题颜色
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mDrawerToggle = new ActionBarDrawerToggle(MainActivity.this,mDrawerLayout,toolbar,R.string.app_name,R.string.app_name);
-        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu();
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                invalidateOptionsMenu();
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
-        mDrawerToggle.syncState();
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
+//        mDrawerToggle = new ActionBarDrawerToggle(MainActivity.this,mDrawerLayout,toolbar,R.string.app_name,R.string.app_name){
+//            @Override
+//            public void onDrawerClosed(View drawerView) {
+//                invalidateOptionsMenu();
+//            }
+//
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                invalidateOptionsMenu();
+//            }
+//        };
+//        mDrawerToggle.syncState();
+//        mDrawerLayout.addDrawerListener(mDrawerToggle);
 
         fragmentManager = getSupportFragmentManager();
         bindViews();
@@ -191,6 +181,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         fTransaction.commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_refresh, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 }
