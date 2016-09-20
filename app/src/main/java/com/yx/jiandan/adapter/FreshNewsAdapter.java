@@ -3,7 +3,6 @@ package com.yx.jiandan.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +12,8 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.yx.jiandan.R;
-import com.yx.jiandan.bean.Author;
-import com.yx.jiandan.bean.CustomFields;
-import com.yx.jiandan.bean.FreshNews;
-import com.yx.jiandan.bean.Tags;
+import com.yx.jiandan.model.FreshNews;
 import com.yx.jiandan.callback.LoadFinishCallBack;
-import com.yx.jiandan.db.manager.AuthorManageer;
-import com.yx.jiandan.db.manager.CustomFieldsManager;
-import com.yx.jiandan.db.manager.FreshNewsManager;
-import com.yx.jiandan.db.manager.TagsManager;
-import com.yx.jiandan.gen.AuthorDao;
-import com.yx.jiandan.gen.CustomFieldsDao;
-import com.yx.jiandan.gen.DaoMaster;
-import com.yx.jiandan.gen.DaoSession;
-import com.yx.jiandan.gen.FreshNewsDao;
-import com.yx.jiandan.gen.TagsDao;
 import com.yx.jiandan.okhttp.OkHttpCallback;
 import com.yx.jiandan.okhttp.OkHttpProxy;
 import com.yx.jiandan.okhttp.parser.FreshNewsParser;
@@ -36,10 +22,7 @@ import com.yx.jiandan.ui.imageload.ImageLoadProxy;
 import com.yx.jiandan.utils.NetWorkUtil;
 
 
-import org.greenrobot.greendao.query.QueryBuilder;
-
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -104,10 +87,6 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
         loadDate();
     }
     public void loadDate() {
-        final FreshNewsManager freshNewsManager = new FreshNewsManager();
-        final AuthorManageer authorManageer = new AuthorManageer();
-        final CustomFieldsManager customFieldsManager = new CustomFieldsManager();
-        final TagsManager tagsManager = new TagsManager();
         if (NetWorkUtil.isNetWorkConnected(mActivity)){
             OkHttpProxy.get(FreshNews.getUrlFreshNews(page), new OkHttpCallback<ArrayList<FreshNews>>(new FreshNewsParser()) {
                 @Override
@@ -115,33 +94,6 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
                     mLoadFinisCallBack.loadFinish(null);
                     mFreshNews.addAll(freshNewses);
                     notifyDataSetChanged();
-                    if (page == 1){
-
-                        freshNewsManager.deleteAll();
-                        customFieldsManager.deleteAll();
-                        tagsManager.deleteAll();
-                        authorManageer.deleteAll();
-                    }
-
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (FreshNews freshNews : freshNewses){
-                                FreshNews mFreshNews = freshNews;
-                                mFreshNews.setPage(page);
-                                freshNewsManager.insert(mFreshNews);
-                                Author author = mFreshNews.getAuthor();
-                                author.setAuthorId(mFreshNews.getPrimarykey());
-                                authorManageer.insert(author);
-                                CustomFields customFields = mFreshNews.getCustomFields();
-                                customFields.setCustomFieldsId(mFreshNews.getPrimarykey());
-                                customFieldsManager.insert(customFields);
-                                Tags tags = mFreshNews.getTags();
-                                tags.setTagsId(mFreshNews.getPrimarykey());
-                                tagsManager.insert(tags);
-                            }
-                        }
-                    }).start();
                 }
 
                 @Override
@@ -149,16 +101,6 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.Fres
                     mLoadFinisCallBack.loadFinish(null);
                 }
             });
-        }else {
-            List<FreshNews> list = new ArrayList<>();
-            QueryBuilder qb = freshNewsManager.getQueryBuilder();
-            list = qb.where(FreshNewsDao.Properties.Page.eq(page)).list();
-
-            mFreshNews.clear();
-            notifyDataSetChanged();
-            mFreshNews.addAll(list);
-
-
         }
 
     }

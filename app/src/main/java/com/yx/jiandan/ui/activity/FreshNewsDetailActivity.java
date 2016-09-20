@@ -6,10 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import com.yx.jiandan.R;
-import com.yx.jiandan.bean.FreshNews;
+import com.yx.jiandan.model.FreshNews;
 import com.yx.jiandan.ui.base.BaseActivity;
 import com.yx.jiandan.ui.fragment.FreshNewsDetailFragment;
 
@@ -38,7 +37,7 @@ public class FreshNewsDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        ArrayList<FreshNews> FreshNews = (ArrayList<com.yx.jiandan.bean.FreshNews>) getIntent().getSerializableExtra(DATA_FRESH_NEWS);
+        ArrayList<FreshNews> FreshNews = (ArrayList<com.yx.jiandan.model.FreshNews>) getIntent().getSerializableExtra(DATA_FRESH_NEWS);
         int position = getIntent().getIntExtra(DATA_POSITION,0);
         viewPager.setAdapter(new FreshNewsDetailAdapter(getSupportFragmentManager(), FreshNews));
         viewPager.setCurrentItem(position);

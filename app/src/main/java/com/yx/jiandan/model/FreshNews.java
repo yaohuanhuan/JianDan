@@ -1,4 +1,4 @@
-package com.yx.jiandan.bean;
+package com.yx.jiandan.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
@@ -13,8 +13,8 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 import com.yx.jiandan.gen.DaoSession;
 import com.yx.jiandan.gen.FreshNewsDao;
-import com.yx.jiandan.gen.AuthorDao;
 import com.yx.jiandan.gen.CustomFieldsDao;
+import com.yx.jiandan.gen.AuthorDao;
 import com.yx.jiandan.gen.TagsDao;
 
 

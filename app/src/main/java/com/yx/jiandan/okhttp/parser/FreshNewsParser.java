@@ -1,6 +1,6 @@
 package com.yx.jiandan.okhttp.parser;
 
-import com.yx.jiandan.bean.FreshNews;
+import com.yx.jiandan.model.FreshNews;
 import com.yx.jiandan.okhttp.OkHttpBaseParser;
 
 import org.json.JSONArray;

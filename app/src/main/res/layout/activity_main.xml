@@ -1,50 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.activity.MainActivity">
 
 
-
-
-
-
-    <!--<include layout="@layout/common_toolbar"></include>-->
-    <!--<include layout="@layout/activity_tool_bar"/>-->
-
-
     <FrameLayout
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:background="#fff"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </FrameLayout>
 
     <android.support.design.widget.AppBarLayout
-
-        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/toolbar"
+        <include
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/primary"
-            app:layout_scrollFlags="scroll|enterAlways"/>
+            android:layout_height="wrap_content"
+            layout="@layout/common_toolbar"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+        </include>
 
     </android.support.design.widget.AppBarLayout>
+
+
     <include
         layout="@layout/layout_bottom"
-       android:layout_above="@+id/swipeRefreshLayout"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom" />
-
+        android:layout_gravity="bottom"
+        app:layout_scrollFlags="scroll|enterAlways"/>
 
 </android.support.design.widget.CoordinatorLayout>

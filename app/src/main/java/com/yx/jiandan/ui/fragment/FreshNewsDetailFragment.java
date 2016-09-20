@@ -2,7 +2,6 @@ package com.yx.jiandan.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.webkit.WebView;
 
 
 import com.yx.jiandan.R;
-import com.yx.jiandan.bean.FreshNews;
+import com.yx.jiandan.model.FreshNews;
 import com.yx.jiandan.okhttp.OkHttpCallback;
 import com.yx.jiandan.okhttp.OkHttpProxy;
 import com.yx.jiandan.okhttp.parser.FreshNewsDetailParser;

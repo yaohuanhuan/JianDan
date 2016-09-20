@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private RelativeLayout rl_1,rl_2,rl_3,rl_4,rl_5;
 
-    private ActionBarDrawerToggle mDrawerToggle;
+//    private ActionBarDrawerToggle mDrawerToggle;
 //    private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
 

@@ -1,6 +1,6 @@
 package com.yx.jiandan.db.manager;
 
-import com.yx.jiandan.bean.Tags;
+import com.yx.jiandan.model.Tags;
 import com.yx.jiandan.db.base.AbstractDatabaseManager;
 
 import org.greenrobot.greendao.AbstractDao;

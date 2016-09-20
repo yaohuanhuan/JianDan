@@ -1,8 +1,7 @@
-package com.yx.jiandan.bean;
+package com.yx.jiandan.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.ToOne;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
