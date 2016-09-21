@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yx.jiandan.R;
+import com.yx.jiandan.adapter.PictureAdapter;
 import com.yx.jiandan.eventbus.MessageEvent;
 import com.yx.jiandan.model.Comments;
 import com.yx.jiandan.model.Picture;
@@ -49,6 +51,7 @@ public class PictureFragment extends Fragment {
 
     private AutoLoadRecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private PictureAdapter pictureAdapter;
 
 
     @Override
@@ -61,35 +64,12 @@ public class PictureFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://jandan.net/?oxwlxojflwblxbsapi=jandan.get_pic_comments&page=1").build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().string();
-                try {
-                    JSONObject obj = new JSONObject(s);
-                    Picture picture = new Picture(obj);
-                    JSONArray commentArray = picture.getComments();
-                    for (int i = 0;i < commentArray.length();i++){
-                        JSONObject obj2 = new JSONObject(commentArray.get(i).toString());
-                        Comments comments = new Comments(obj2);
-                        JSONArray picArray = comments.getPics();
-                        for (int j = 0; j < picArray.length(); j++){
-                            Log.e(TAG,picArray.get(j).toString());
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        recyclerView = (AutoLoadRecyclerView) getView().findViewById(R.id.recycler_view_picture);
+        pictureAdapter = new PictureAdapter(getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setOnPauseListenerParams(false, true);
+        recyclerView.setAdapter(pictureAdapter);
+        pictureAdapter.loadFirst();
 
     }
 
