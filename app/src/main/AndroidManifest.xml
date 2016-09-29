@@ -22,6 +22,9 @@
         <activity android:name=".ui.activity.FreshNewsDetailActivity" >
 
         </activity>
+        <activity android:name=".ui.activity.ImageDetailActivity">
+
+        </activity>
     </application>
 
 </manifest>

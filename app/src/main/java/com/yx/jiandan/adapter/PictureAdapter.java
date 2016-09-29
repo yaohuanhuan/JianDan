@@ -1,6 +1,7 @@
 package com.yx.jiandan.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +17,8 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.yx.jiandan.R;
 import com.yx.jiandan.model.Comments;
 import com.yx.jiandan.model.Picture;
+import com.yx.jiandan.ui.activity.ImageDetailActivity;
+import com.yx.jiandan.ui.base.BaseActivity;
 import com.yx.jiandan.ui.imageload.ImageLoadProxy;
 import com.yx.jiandan.view.ShowMaxImageView;
 
@@ -55,7 +58,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureV
     }
 
     @Override
-    public void onBindViewHolder(final PictureViewHolder holder, int position) {
+    public void onBindViewHolder(final PictureViewHolder holder, final int position) {
         holder.progress.setProgress(0);
         holder.progress.setVisibility(View.VISIBLE);
         ImageLoadProxy.displayImageList(list.get(position), holder.img, R.mipmap.ic_loading_large, new
@@ -68,11 +71,20 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureV
                 }, new ImageLoadingProgressListener() {
             @Override
             public void onProgressUpdate(String s, View view, int i, int i1) {
-                Log.e(TAG,"i == "+i +"***"+"i1 === "+i1);
                 holder.progress.setProgress((int) (i * 100f / i1));
             }
         });
-
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, ImageDetailActivity.class);
+                intent.putExtra(BaseActivity.DATA_IMAGE_URL,list.get(position));
+                if (list.get(position).endsWith(".gif")){
+                    intent.putExtra(BaseActivity.DATA_IS_NEED_WEBVIEW, true);
+                }
+                activity.startActivity(intent);
+            }
+        });
 
     }
 
