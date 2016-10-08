@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.yx.jiandan.R;
+import com.yx.jiandan.callback.LoadFinishCallBack;
 import com.yx.jiandan.model.Comments;
 import com.yx.jiandan.model.Picture;
 import com.yx.jiandan.ui.activity.ImageDetailActivity;
@@ -44,9 +45,11 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureV
     public Activity activity;
     private int page;
     private String TAG = "pic";
+    private LoadFinishCallBack mLoadFinisCallBack;
 
-    public PictureAdapter(Activity activity) {
+    public PictureAdapter(Activity activity, LoadFinishCallBack loadFinishCallBack) {
         this.activity = activity;
+        mLoadFinisCallBack = loadFinishCallBack;
         list = new ArrayList<>();
 
     }

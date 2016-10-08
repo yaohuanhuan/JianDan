@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.yx.jiandan.R;
 import com.yx.jiandan.adapter.PictureAdapter;
+import com.yx.jiandan.callback.LoadMoreListener;
 import com.yx.jiandan.eventbus.MessageEvent;
 import com.yx.jiandan.model.Comments;
 import com.yx.jiandan.model.Picture;
@@ -65,8 +66,14 @@ public class PictureFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recyclerView = (AutoLoadRecyclerView) getView().findViewById(R.id.recycler_view_picture);
-        pictureAdapter = new PictureAdapter(getActivity());
+        pictureAdapter = new PictureAdapter(getActivity(),recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLoadMoreListener(new LoadMoreListener() {
+            @Override
+            public void loadMore() {
+                pictureAdapter.loadNextPage();
+            }
+        });
         recyclerView.setOnPauseListenerParams(false, true);
         recyclerView.setAdapter(pictureAdapter);
         pictureAdapter.loadFirst();
