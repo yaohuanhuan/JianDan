@@ -46,11 +46,13 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureV
     private int page;
     private String TAG = "pic";
     private LoadFinishCallBack mLoadFinisCallBack;
+    private Boolean mIsSister;
 
-    public PictureAdapter(Activity activity, LoadFinishCallBack loadFinishCallBack) {
+    public PictureAdapter(Activity activity, LoadFinishCallBack loadFinishCallBack,Boolean isSister) {
         this.activity = activity;
         mLoadFinisCallBack = loadFinishCallBack;
         list = new ArrayList<>();
+        mIsSister = isSister;
 
     }
 
@@ -112,7 +114,11 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureV
 
     private void loadData() {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://jandan.net/?oxwlxojflwblxbsapi=jandan.get_pic_comments&page="+page).build();
+        String url = mIsSister ?
+                "http://jandan.net/?oxwlxojflwblxbsapi=jandan.get_ooxx_comments&page="
+                :
+                "http://jandan.net/?oxwlxojflwblxbsapi=jandan.get_pic_comments&page=";
+        Request request = new Request.Builder().url(url+page).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

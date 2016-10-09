@@ -66,7 +66,19 @@ public class PictureFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recyclerView = (AutoLoadRecyclerView) getView().findViewById(R.id.recycler_view_picture);
-        pictureAdapter = new PictureAdapter(getActivity(),recyclerView);
+        pictureAdapter = new PictureAdapter(getActivity(),recyclerView,false);
+        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pictureAdapter.loadFirst();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setLoadMoreListener(new LoadMoreListener() {
             @Override
